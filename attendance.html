@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATTND//OS — Attendance Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="ambient"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="scanline"></div>
+
+<div class="wrap">
+
+  <header class="cover">
+    <div>
+      <p class="eyebrow">
+        <span class="led" id="statusLed"></span> ROSTER TELEMETRY
+        <span class="divider">//</span>
+        <span id="sysClock" class="mono">--:--:--</span>
+      </p>
+      <h1>ATTND<span>//</span>OS</h1>
+      <p class="tagline">Track every logged class, hold the 75% line, and know exactly how many sessions stand between a unit and safe attendance.</p>
+    </div>
+    <div id="userChipHolder"></div>
+  </header>
+  <div class="hazard"></div>
+
+  <!-- LOGIN VIEW -->
+  <section id="loginView" class="login-card hud-frame">
+    <div class="stamp">A//OS</div>
+    <h2>Operator Authentication</h2>
+    <div class="boot-lines" id="bootLines"></div>
+    <label for="emailInput">Operator ID</label>
+    <input id="emailInput" type="email" placeholder="operator@gmail.com" autocomplete="email">
+    <p class="error-text" id="loginError"></p>
+    <button class="btn" id="loginBtn">Boot Console</button>
+    <p class="fineprint">NO PASSWORD REQUIRED &middot; LOCAL STORAGE ONLY</p>
+  </section>
+
+  <!-- APP VIEW -->
+  <section id="appView" hidden>
+
+    <div class="toolbar">
+      <div class="criteria-pill">
+        Threshold
+        <input id="criteriaInput" type="number" min="1" max="100" value="75"> %
+      </div>
+      <div class="toolbar-actions">
+        <button class="btn-ghost" id="sampleBtn"></button>
+        <button class="btn-gold" id="toggleAddBtn"></button>
+      </div>
+    </div>
+
+    <div class="add-form" id="addForm">
+      <div class="row">
+        <div class="field">
+          <label>Unit / Subject Name</label>
+          <input id="newSubjectName" type="text" placeholder="e.g. Data Structures">
+        </div>
+        <div class="field" style="max-width:150px;">
+          <label>Sessions Attended</label>
+          <input id="newSubjectAttended" type="number" min="0" value="0">
+        </div>
+        <div class="field" style="max-width:150px;">
+          <label>Sessions Held</label>
+          <input id="newSubjectTotal" type="number" min="0" value="0">
+        </div>
+      </div>
+      <p class="error-text" id="addError"></p>
+      <div class="actions">
+        <button class="btn-ghost" id="cancelAddBtn">Cancel</button>
+        <button class="btn-gold" id="saveSubjectBtn">Commit Unit</button>
+      </div>
+    </div>
+
+    <div class="summary hud-frame" id="summaryCard">
+      <div class="dial-wrap">
+        <svg width="180" height="180" viewBox="0 0 200 200">
+          <polygon class="hex-frame-glow" points="100,30 161.2,65 161.2,135 100,170 38.8,135 38.8,65"></polygon>
+          <polygon class="hex-frame" points="100,38 153.7,69 153.7,131 100,162 46.3,131 46.3,69"></polygon>
+          <g id="tickRing"></g>
+          <text id="dialPct" x="100" y="96" text-anchor="middle" font-family="IBM Plex Mono" font-size="26" font-weight="700" fill="#EAEFF6">0%</text>
+          <text x="100" y="114" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" letter-spacing="1" fill="#7C8797">CORE OUTPUT</text>
+        </svg>
+        <p class="dial-label">Fleet-wide attendance</p>
+      </div>
+      <div class="summary-stats" id="summaryStats"></div>
+      <p class="summary-note" id="summaryNote"></p>
+    </div>
+
+    <h2 class="ledger-title">Tracked Units <span class="count" id="subjectCount"></span></h2>
+    <div id="subjectList"></div>
+    <div class="empty-state" id="emptyState" hidden>
+      <h3>No units registered</h3>
+      <p>&gt; Register a unit or load diagnostic sample data to begin telemetry.</p>
+      <button class="btn-gold" id="emptySampleBtn">Load Diagnostic Sample</button>
+    </div>
+
+  </section>
+</div>
+
+<div id="toastHolder"></div>
+<div id="modalOverlay">
+  <div class="modal-box">
+    <p id="modalMessage"></p>
+    <div class="modal-actions">
+      <button id="modalCancel">Cancel</button>
+      <button id="modalConfirm">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
